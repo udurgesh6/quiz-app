@@ -1,28 +1,70 @@
 import "./App.css";
 import { useState } from "react";
 function App() {
-  const [age, setAge] = useState(31);
-  const [name, setName] = useState("Durgesh");
-  const [products, setProducts] = useState(["Apple", "Mango", "Chilly"]);
+  const [id, setId] = useState(0);
+  const [name, setName] = useState("");
+  const [fruits, setFruits] = useState([
+    { name: "Apple", id: 1, quantity: 1 },
+    { name: "Mango", id: 2, quantity: 1 },
+    { name: "Chilly", id: 3, quantity: 1 },
+  ]);
+
+  const addThisFruit = () => {
+    let temp_fruits = [...fruits];
+    let indexOfThisFruit = temp_fruits.findIndex(
+      (fruit) => fruit.name === name
+    );
+    if (indexOfThisFruit === -1) {
+      temp_fruits.push({ name: name, id: id, quantity: 1 });
+    } else {
+      temp_fruits[indexOfThisFruit].quantity += 1;
+    }
+    setFruits(temp_fruits);
+    setName("");
+    setId(0);
+  };
+
+  const removeThisFruit = (fruit_id) => {
+    let temp_fruits = [...fruits];
+    // let filtered_fruits = temp_fruits.filter(filterFruit);
+    let filtered_fruits = temp_fruits.filter((fruit) => fruit.id !== fruit_id);
+    console.log(filtered_fruits);
+    setFruits(filtered_fruits);
+    // function filterFruit(fruit){
+    //   return fruit.id !== fruit_id
+    // }
+  };
 
   return (
     <div className="App">
-      <p>
-        Name= {name} Age - {age}
-      </p>
-      <input value={name} onChange={(event) => setName(event.target.value)} />
       <input
-        type="number"
-        value={age}
-        onChange={(e) => setAge(e.target.value)}
+        placeholder="Name"
+        value={name}
+        onChange={(event) => setName(event.target.value)}
       />
-      <ul>
-        {products.map((element, index) => (
-          <li key={index}>
-            ({index + 1}){element}
-          </li>
-        ))}
-      </ul>
+      <input
+        placeholder="Id"
+        type="number"
+        value={id}
+        onChange={(e) => setId(e.target.value)}
+      />
+      <button onClick={addThisFruit}>Add Fruit</button>
+      {fruits.map((fruit) => (
+        <div
+          key={fruit.id}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <p>
+            Fruit - {fruit.name} - {fruit.quantity}
+          </p>
+          <button onClick={() => removeThisFruit(fruit.id)}>Remove</button>
+        </div>
+      ))}
     </div>
   );
 }
