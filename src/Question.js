@@ -1,4 +1,5 @@
 import React from "react";
+import ProgressBar from "react-bootstrap/ProgressBar";
 import "./Question.css";
 const Question = ({
   questionDetails,
@@ -6,6 +7,7 @@ const Question = ({
   setQuestionDetails,
   setCurrentQuestionIndex,
 }) => {
+  console.log((currentQuestionIndex + 1 / questionDetails.length) * 100);
   const answerTheQuestion = (option_rec) => {
     let temp_questionDetails = [...questionDetails];
     temp_questionDetails[currentQuestionIndex].user_answer = option_rec;
@@ -21,6 +23,15 @@ const Question = ({
         justifyContent: "center",
       }}
     >
+      <ProgressBar
+        now={Math.trunc(
+          ((currentQuestionIndex + 1) / questionDetails.length) * 100
+        )}
+        label={`${Math.trunc(
+          ((currentQuestionIndex + 1) / questionDetails.length) * 100
+        )}%`}
+        style={{ width: "200px" }}
+      />
       <p>{questionDetails[currentQuestionIndex].question}</p>
       <div
         style={{
