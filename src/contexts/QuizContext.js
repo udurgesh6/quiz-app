@@ -11,6 +11,7 @@ const QuizContextProvider = ({ children }) => {
       option2: "Samay",
       option3: "Raina",
       option4: "Gaurav",
+      options: ["Rahul", "Gaurav", ""],
       correct_answer: "Samay",
       user_answer: "",
     },
@@ -21,7 +22,7 @@ const QuizContextProvider = ({ children }) => {
       option2: "Kejri",
       option3: "Reena",
       option4: "Saurav",
-      correct_answer: "MOdi",
+      correct_answer: "Modi",
       user_answer: "",
     },
     {
@@ -35,8 +36,17 @@ const QuizContextProvider = ({ children }) => {
       user_answer: "",
     },
   ]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(null);
+
   return (
-    <QuizContext.Provider value={{ quizQuestions, setQuizQuestions }}>
+    <QuizContext.Provider
+      value={{
+        quizQuestions,
+        setQuizQuestions,
+        currentQuestionIndex,
+        setCurrentQuestionIndex,
+      }}
+    >
       {children}
     </QuizContext.Provider>
   );
