@@ -19,11 +19,31 @@ function App() {
         console.log("I will run anyway");
       });
   }, []);
-
-  const getParticularProductDetail = (id) => {
-    axios.get(`https://fakestoreapi.com/products/${id}`).then((res) => {
+  useEffect(() => {
+    axios.get("http://localhost:8000/users").then((res) => {
       console.log(res);
     });
+  }, []);
+
+  const getParticularProductDetail = (id) => {
+    axios
+      .get(
+        `https://fakestoreapi.com/products/${id}?name=${name}&email=${email}`
+      )
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
+  const createUser = () => {
+    axios
+      .post(`http://localhost:8000/create_user`, {
+        name: name,
+        email: email,
+      })
+      .then((res) => {
+        console.log(res);
+      });
   };
 
   return (
@@ -35,14 +55,14 @@ function App() {
             Interactive Quiz
           </p>
           <Modal />
-          {products.map((product) => (
+          {/* {products.map((product) => (
             <div
               key={product.id}
               onClick={() => getParticularProductDetail(product.id)}
             >
               <p>{product.title}</p>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </QuizContextProvider>
